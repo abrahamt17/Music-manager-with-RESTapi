@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSongs } from './songsSlice';
 import SongList from './components/SongList';
 import AddSongForm from './components/AddSongForm';
-import './index.css';
 
-// import updateSong from './components/EditSongForm';
 const App = () => {
   const dispatch = useDispatch();
   const songs = useSelector(state => state.songs.songs);
@@ -18,15 +16,12 @@ const App = () => {
   }, [songStatus, dispatch]);
 
   return (
-    <div className="App">
-      <h1>Song Manager</h1>
+    <div className="App min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white p-4">
+      <h1 className="text-4xl font-bold mb-8 text-center animate-pulse">Song Manager</h1>
       <AddSongForm />
-      
       <SongList songs={songs} />
     </div>
   );
 };
 
 export default App;
-
-
