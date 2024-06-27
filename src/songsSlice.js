@@ -31,6 +31,9 @@ const songsSlice = createSlice({
     error: null,
   },
   reducers: {},
+
+
+  // kindaa extra reducers to handle asynvcs
   extraReducers: (builder) => {
     builder
       .addCase(fetchSongs.pending, (state) => {

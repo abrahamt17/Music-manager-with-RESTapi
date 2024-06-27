@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSongs } from './songsSlice';
 import SongList from './components/SongList';
 import AddSongForm from './components/AddSongForm';
+import './index.css';
+
 // import updateSong from './components/EditSongForm';
 const App = () => {
   const dispatch = useDispatch();
