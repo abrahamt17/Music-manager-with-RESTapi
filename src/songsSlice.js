@@ -34,15 +34,15 @@ const songsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSongs.pending, (state) => {
-        state.status = 'loading';
+        state.status = 'loading...';
       })
       .addCase(fetchSongs.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'suceded';
         state.songs = action.payload;
       })
       .addCase(fetchSongs.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.error.message; 
       })
       .addCase(addSong.fulfilled, (state, action) => {
         state.songs.push(action.payload);
