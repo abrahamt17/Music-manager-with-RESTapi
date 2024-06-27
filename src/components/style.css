@@ -1,0 +1,49 @@
+@keyframes disco {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .gradient-button {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .gradient-button span {
+    display: inline-block;
+    padding: 12px 24px;
+    background: black;
+    color: #d4d4d8;
+    border-radius: 12px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .gradient-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: conic-gradient(from 180deg, purple, red, amber, purple);
+    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    animation: disco 2s linear infinite;
+    transition: all 0.3s;
+  }
+  
+  .gradient-button:hover::before {
+    width: 160%;
+    height: 160%;
+  }
+  

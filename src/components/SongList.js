@@ -24,7 +24,7 @@ const SongList = ({ songs }) => {
   return (
     <ul className="space-y-4">
       {songs.map(song => (
-        <li key={song.id} className="p-4 bg-white bg-opacity-20 rounded-md shadow-md backdrop-blur-md">
+        <li key={song.id} className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg">
           {editingId === song.id ? (
             <input
               type="text"
@@ -36,22 +36,16 @@ const SongList = ({ songs }) => {
                   handleUpdate(song.id);
                 }
               }}
-              className="p-2 rounded-md shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="flex-1 p-2 mr-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
             />
           ) : (
-            <span className="text-xl">{song.title}</span>
+            <span className="flex-1">{song.title}</span>
           )}
-          <button
-            onClick={() => handleDelete(song.id)}
-            className="ml-4 px-4 py-2 rounded-md bg-red-500 hover:bg-red-700 transition duration-300 ease-in-out"
-          >
+          <button onClick={() => handleDelete(song.id)} className="ml-2 text-red-400 hover:text-red-600">
             Delete
           </button>
           {editingId === song.id ? null : (
-            <button
-              onClick={() => handleEditClick(song.id, song.title)}
-              className="ml-2 px-4 py-2 rounded-md bg-yellow-500 hover:bg-yellow-700 transition duration-300 ease-in-out"
-            >
+            <button onClick={() => handleEditClick(song.id, song.title)} className="ml-2 text-yellow-400 hover:text-yellow-600">
               Edit
             </button>
           )}
@@ -60,5 +54,4 @@ const SongList = ({ songs }) => {
     </ul>
   );
 };
-
 export default SongList;
