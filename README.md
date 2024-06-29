@@ -4,14 +4,6 @@ A simple React and Redux application to manage a list of songs. This application
 
 ## Features
 
-- Fetch songs from from RESTAPI using redux-saga
-- Add new songs to the list
-- Edit existing songs
-- Delete songs from the list
-- View the list of songs with the ability to show more/less
-
-## Features
-
 - Fetch songs from an a jsonplaceholder (RESTApi)
 - Add new songs to the list
 - Edit existing songs
@@ -59,10 +51,6 @@ The application uses Redux for state management. The state is divided into the f
 ### songsSlice.js
 
 Defines the actions and reducers for managing the list of songs.
-
-## API Integration
-
-The application fetches songs from the iTunes Search API. The API integration is handled in `src/services/api.js`.
 
 ### src/services/api.js
 
