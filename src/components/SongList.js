@@ -21,6 +21,11 @@ const SongItem = styled.li`
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid #4a5568;
+
+  > div {
+    display: flex;
+    gap: 10px;
+  }
 `;
 
 const SongInput = styled.input`
@@ -76,15 +81,20 @@ const SongList = ({ songs }) => {
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                 />
-                <DynamicIslandButton onClick={() => handleUpdate(song.id)}>Save</DynamicIslandButton>
+                <div>
+                  <DynamicIslandButton onClick={() => handleUpdate(song.id)}>Save</DynamicIslandButton>
+                  <DynamicIslandButton onClick={() => setEditingId(null)}>Cancel</DynamicIslandButton>
+                </div>
               </>
             ) : (
               <>
                 <span>{song.title}</span>
-                <DynamicIslandButton onClick={() => handleEditClick(song.id, song.title)}>Edit</DynamicIslandButton>
+                <div>
+                  <DynamicIslandButton onClick={() => handleEditClick(song.id, song.title)}>Edit</DynamicIslandButton>
+                  <DynamicIslandButton onClick={() => handleDelete(song.id)}>Delete</DynamicIslandButton>
+                </div>
               </>
             )}
-            <DynamicIslandButton onClick={() => handleDelete(song.id)}>Delete</DynamicIslandButton>
           </SongItem>
         ))}
       </ul>
