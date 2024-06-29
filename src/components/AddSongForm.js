@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addSong } from '../songsSlice';
+import DynamicIslandButton from './DynamicIslandButton';
 
 const FormContainer = styled.form`
   margin-bottom: 24px;
@@ -28,22 +29,6 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  background: linear-gradient(to right, #3b82f6, #ef4444);
-  color: white;
-  padding: 12px 16px;
-  font-size: 1.25rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  transition: background 0.2s;
-
-  &:focus {
-    box-shadow: 0 0 0 2px #111827;
-  }
-`;
-
 const AddSongForm = () => {
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
@@ -62,7 +47,7 @@ const AddSongForm = () => {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Song title"
       />
-      <Button type="submit">Add Song</Button>
+      <DynamicIslandButton type="submit">Add Song</DynamicIslandButton>
     </FormContainer>
   );
 };
