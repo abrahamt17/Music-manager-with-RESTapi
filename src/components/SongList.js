@@ -1,6 +1,68 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSong, updateSong } from '../songsSlice';
+
+const ListContainer = styled.div`
+  margin-top: 16px;
+`;
+
+const SongItem = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: linear-gradient(to bottom right, #374151, #111827);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const SongInput = styled.input`
+  flex: 1;
+  padding: 8px;
+  margin-right: 16px;
+  border-radius: 0.5rem;
+  background-color: #374151;
+  color: white;
+  outline: none;
+  border: none;
+
+  &:focus {
+    box-shadow: 0 0 0 2px #9333ea;
+  }
+`;
+
+const SongButton = styled.button`
+  margin-left: 8px;
+  color: ${({ color }) => color || 'white'};
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: ${({ hoverColor }) => hoverColor || '#10b981'};
+  }
+`;
+
+const SeeMoreButton = styled.button`
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: linear-gradient(to right, #3b82f6, #ef4444);
+  color: white;
+  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: background 0.2s;
+
+  &:focus {
+    box-shadow: 0 0 0 2px #111827;
+  }
+`;
 
 const SongList = ({ songs }) => {
   const dispatch = useDispatch();
@@ -25,12 +87,12 @@ const SongList = ({ songs }) => {
   const displayedSongs = showAll ? songs : songs.slice(0, 15);
 
   return (
-    <div>
-      <ul className="space-y-4">
+    <ListContainer>
+      <ul css={css`list-style: none; padding: 0; margin: 0;`}>
         {displayedSongs.map((song) => (
-          <li key={song.id} className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg">
+          <SongItem key={song.id}>
             {editingId === song.id ? (
-              <input
+              <SongInput
                 type="text"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
@@ -40,31 +102,27 @@ const SongList = ({ songs }) => {
                     handleUpdate(song.id);
                   }
                 }}
-                className="flex-1 p-2 mr-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             ) : (
-              <span className="flex-1">{song.title}</span>
+              <span css={css`flex: 1;`}>{song.title}</span>
             )}
-            <button onClick={() => handleDelete(song.id)} className="ml-2 text-red-400 hover:text-red-600">
+            <SongButton onClick={() => handleDelete(song.id)} color="#ef4444" hoverColor="#f87171">
               Delete
-            </button>
+            </SongButton>
             {editingId === song.id ? null : (
-              <button onClick={() => handleEditClick(song.id, song.title)} className="ml-2 text-yellow-400 hover:text-yellow-600">
+              <SongButton onClick={() => handleEditClick(song.id, song.title)} color="#fbbf24" hoverColor="#fcd34d">
                 Edit
-              </button>
+              </SongButton>
             )}
-          </li>
+          </SongItem>
         ))}
       </ul>
       {songs.length > 15 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="mt-4 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-2 text-xl rounded font-medium focus:ring ring-black ring-opacity-10"
-        >
+        <SeeMoreButton onClick={() => setShowAll(!showAll)}>
           {showAll ? 'Show Less' : 'See More'}
-        </button>
+        </SeeMoreButton>
       )}
-    </div>
+    </ListContainer>
   );
 };
 
