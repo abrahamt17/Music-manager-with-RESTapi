@@ -15,7 +15,6 @@ const App = () => {
     }
   }, [songStatus, dispatch]);
 
-  
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-black to-purple-500 text-white flex flex-col items-center p-6">
       <h1 className="text-5xl font-extrabold mb-10">Song Manager</h1>

@@ -1,62 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-const songsSlice = createSlice({
-  name: 'songs',
-  initialState: {
-    songs: [],
-    status: 'idle',
-    error: null,
-  },
-  reducers: {
-    fetchSongs: (state) => {
-      state.status = 'loading';
-    },
-    fetchSongsSuccess: (state, action) => {
-      state.status = 'succeeded';
-      state.songs = action.payload;
-    },
-    fetchSongsFailure: (state, action) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
-    addSong: (state, action) => {
-      state.status = 'loading';
-    },
-    addSongSuccess: (state, action) => {
-      state.songs.push(action.payload);
-      state.status = 'succeeded';
-    },
-    addSongFailure: (state, action) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
-    updateSong: (state, action) => {
-      state.status = 'loading';
-    },
-    updateSongSuccess: (state, action) => {
-      const index = state.songs.findIndex(song => song.id === action.payload.id);
-      state.songs[index] = action.payload;
-      state.status = 'succeeded';
-    },
-    updateSongFailure: (state, action) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
-    deleteSong: (state, action) => {
-      state.status = 'loading';
-    },
-    deleteSongSuccess: (state, action) => {
-      state.songs = state.songs.filter(song => song.id !== action.payload);
-      state.status = 'succeeded';
-    },
-    deleteSongFailure: (state, action) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
-  },
-});
-
-export const {
+import { call, put, takeLatest } from 'redux-saga/effects';
+import axios from 'axios';
+import {
   fetchSongs,
   fetchSongsSuccess,
   fetchSongsFailure,
@@ -69,6 +13,49 @@ export const {
   deleteSong,
   deleteSongSuccess,
   deleteSongFailure,
-} = songsSlice.actions;
+} from './songsSlice';
 
-export default songsSlice.reducer;
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+
+function* fetchSongsSaga() {
+  try {
+    const response = yield call(axios.get, API_URL);
+    yield put(fetchSongsSuccess(response.data));
+  } catch (error) {
+    yield put(fetchSongsFailure(error.message));
+  }
+}
+
+function* addSongSaga(action) {
+  try {
+    const response = yield call(axios.post, API_URL, action.payload);
+    yield put(addSongSuccess(response.data));
+  } catch (error) {
+    yield put(addSongFailure(error.message));
+  }
+}
+
+function* updateSongSaga(action) {
+  try {
+    const response = yield call(axios.put, `${API_URL}/${action.payload.id}`, action.payload);
+    yield put(updateSongSuccess(response.data));
+  } catch (error) {
+    yield put(updateSongFailure(error.message));
+  }
+}
+
+function* deleteSongSaga(action) {
+  try {
+    yield call(axios.delete, `${API_URL}/${action.payload}`);
+    yield put(deleteSongSuccess(action.payload));
+  } catch (error) {
+    yield put(deleteSongFailure(error.message));
+  }
+}
+
+export default function* rootSaga() {
+  yield takeLatest(fetchSongs.type, fetchSongsSaga);
+  yield takeLatest(addSong.type, addSongSaga);
+  yield takeLatest(updateSong.type, updateSongSaga);
+  yield takeLatest(deleteSong.type, deleteSongSaga);
+}
