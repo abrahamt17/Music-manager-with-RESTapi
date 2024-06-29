@@ -50,51 +50,50 @@ const SongList = ({ songs }) => {
     setEditingId(null);
   };
 
-  const handleEditClick = (id, currentTitle) => {
+  const handleEditClick = (id, title) => {
     setEditingId(id);
-    setNewTitle(currentTitle);
+    setNewTitle(title);
   };
 
-  if (!Array.isArray(songs)) {
-    return <div>Error: Songs data is not an array.</div>;
-  }
+  const handleShowAll = () => {
+    setShowAll(!showAll);
+  };
 
-  const displayedSongs = showAll ? songs : songs.slice(0, 15);
+  const displayedSongs = showAll ? songs : songs.slice(0, 5);
 
   return (
     <ListContainer>
-      <ul css={css`list-style: none; padding: 0; margin: 0;`}>
+      <ul
+        css={css`
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        `}
+      >
         {displayedSongs.map((song) => (
           <SongItem key={song.id}>
             {editingId === song.id ? (
-              <SongInput
-                type="text"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                onBlur={() => handleUpdate(song.id)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    handleUpdate(song.id);
-                  }
-                }}
-              />
+              <>
+                <SongInput
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                />
+                <DynamicIslandButton onClick={() => handleUpdate(song.id)}>Save</DynamicIslandButton>
+              </>
             ) : (
-              <span css={css`flex: 1;`}>{song.title}</span>
+              <>
+                <span>{song.title}</span>
+                <DynamicIslandButton onClick={() => handleEditClick(song.id, song.title)}>Edit</DynamicIslandButton>
+              </>
             )}
-            <DynamicIslandButton onClick={() => handleDelete(song.id)} style={{ marginLeft: '8px', color: '#ef4444' }}>
-              Delete
-            </DynamicIslandButton>
-            {editingId === song.id ? null : (
-              <DynamicIslandButton onClick={() => handleEditClick(song.id, song.title)} style={{ marginLeft: '8px', color: '#fbbf24' }}>
-                Edit
-              </DynamicIslandButton>
-            )}
+            <DynamicIslandButton onClick={() => handleDelete(song.id)}>Delete</DynamicIslandButton>
           </SongItem>
         ))}
       </ul>
-      {songs.length > 15 && (
-        <DynamicIslandButton onClick={() => setShowAll(!showAll)} style={{ marginTop: '16px' }}>
-          {showAll ? 'Show Less' : 'See More'}
+      {songs.length > 5 && (
+        <DynamicIslandButton onClick={handleShowAll}>
+          {showAll ? 'Show Less' : 'Show All'}
         </DynamicIslandButton>
       )}
     </ListContainer>

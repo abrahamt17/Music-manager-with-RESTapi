@@ -19,7 +19,7 @@ const songsSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
-    addSong: (state, action) => {
+    addSong: (state) => {
       state.status = 'loading';
     },
     addSongSuccess: (state, action) => {
@@ -30,7 +30,7 @@ const songsSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
-    updateSong: (state, action) => {
+    updateSong: (state) => {
       state.status = 'loading';
     },
     updateSongSuccess: (state, action) => {
@@ -42,7 +42,7 @@ const songsSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
-    deleteSong: (state, action) => {
+    deleteSong: (state) => {
       state.status = 'loading';
     },
     deleteSongSuccess: (state, action) => {

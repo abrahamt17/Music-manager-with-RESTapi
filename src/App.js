@@ -1,9 +1,9 @@
-/** @jsxImportSource @emotion/react */
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
-import React from 'react';
 import AddSongForm from './components/AddSongForm';
 import SongList from './components/SongList';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchSongs } from './songsSlice';
 
 const AppContainer = styled.div`
   max-width: 800px;
@@ -16,8 +16,14 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const songs = useSelector((state) => state.songs);
-  console.log(songs); // Add this line to check the state
+  const dispatch = useDispatch();
+  const songs = useSelector((state) => state.songs.songs);
+
+  useEffect(() => {
+    dispatch(fetchSongs());
+  }, [dispatch]);
+
+  console.log(songs); // Check the state
 
   return (
     <AppContainer>

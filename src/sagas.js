@@ -20,6 +20,7 @@ const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 function* fetchSongsSaga() {
   try {
     const response = yield call(axios.get, API_URL);
+    console.log(response.data); // Log API response
     yield put(fetchSongsSuccess(response.data));
   } catch (error) {
     yield put(fetchSongsFailure(error.message));
