@@ -1,48 +1,29 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSongs } from './songsSlice';
-import SongList from './components/SongList';
+import styled from '@emotion/styled';
+import React from 'react';
 import AddSongForm from './components/AddSongForm';
+import SongList from './components/SongList';
+import { useSelector } from 'react-redux';
 
 const AppContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #6b21a8, #111827, #6b21a8);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1a202c;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
-
-const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 24px;
-`;
-
-const App = () => {
-  const dispatch = useDispatch();
-  const songs = useSelector((state) => state.songs.songs);
-  const songStatus = useSelector((state) => state.songs.status);
-
-  useEffect(() => {
-    if (songStatus === 'idle') {
-      dispatch(fetchSongs());
-    }
-  }, [songStatus, dispatch]);
-
+function App() {
+  const songs = useSelector((state) => state.songs);
   return (
     <AppContainer>
-      <Title>Song Manager</Title>
-      <div css={css`width: 100%; max-width: 32rem;`}>
-        <AddSongForm />
-        <SongList songs={songs} />
-      </div>
+      <h1>Song Manager</h1>
+      <AddSongForm />
+      <SongList songs={songs} />
     </AppContainer>
   );
-};
+}
 
 export default App;
