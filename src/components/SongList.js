@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSong, updateSong } from '../songsSlice';
+import DynamicIslandButton from './DynamicIslandButton';
 
 const ListContainer = styled.div`
   margin-top: 16px;
@@ -31,36 +32,6 @@ const SongInput = styled.input`
 
   &:focus {
     box-shadow: 0 0 0 2px #9333ea;
-  }
-`;
-
-const SongButton = styled.button`
-  margin-left: 8px;
-  color: ${({ color }) => color || 'white'};
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s;
-
-  &:hover {
-    color: ${({ hoverColor }) => hoverColor || '#10b981'};
-  }
-`;
-
-const SeeMoreButton = styled.button`
-  margin-top: 16px;
-  padding: 8px 16px;
-  background: linear-gradient(to right, #3b82f6, #ef4444);
-  color: white;
-  font-size: 1.25rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  transition: background 0.2s;
-
-  &:focus {
-    box-shadow: 0 0 0 2px #111827;
   }
 `;
 
@@ -106,21 +77,21 @@ const SongList = ({ songs }) => {
             ) : (
               <span css={css`flex: 1;`}>{song.title}</span>
             )}
-            <SongButton onClick={() => handleDelete(song.id)} color="#ef4444" hoverColor="#f87171">
+            <DynamicIslandButton onClick={() => handleDelete(song.id)} style={{ marginLeft: '8px', color: '#ef4444' }}>
               Delete
-            </SongButton>
+            </DynamicIslandButton>
             {editingId === song.id ? null : (
-              <SongButton onClick={() => handleEditClick(song.id, song.title)} color="#fbbf24" hoverColor="#fcd34d">
+              <DynamicIslandButton onClick={() => handleEditClick(song.id, song.title)} style={{ marginLeft: '8px', color: '#fbbf24' }}>
                 Edit
-              </SongButton>
+              </DynamicIslandButton>
             )}
           </SongItem>
         ))}
       </ul>
       {songs.length > 15 && (
-        <SeeMoreButton onClick={() => setShowAll(!showAll)}>
+        <DynamicIslandButton onClick={() => setShowAll(!showAll)} style={{ marginTop: '16px' }}>
           {showAll ? 'Show Less' : 'See More'}
-        </SeeMoreButton>
+        </DynamicIslandButton>
       )}
     </ListContainer>
   );
