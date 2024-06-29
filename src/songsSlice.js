@@ -23,7 +23,7 @@ const songsSlice = createSlice({
       state.status = 'loading';
     },
     addSongSuccess: (state, action) => {
-      state.songs.push(action.payload);
+      state.songs.unshift(action.payload);  // Place the new song at the beginning
       state.status = 'succeeded';
     },
     addSongFailure: (state, action) => {

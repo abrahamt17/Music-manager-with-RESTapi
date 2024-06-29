@@ -1,38 +1,34 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { useDispatch } from 'react-redux';
-import { deleteSong, updateSong } from '../songsSlice';
+import { updateSong, deleteSong } from '../songsSlice';
 import DynamicIslandButton from './DynamicIslandButton';
 
 const ListContainer = styled.div`
-  margin-top: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #2d3748;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const SongItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
-  background: linear-gradient(to bottom right, #374151, #111827);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  border-bottom: 1px solid #4a5568;
 `;
 
 const SongInput = styled.input`
-  flex: 1;
   padding: 8px;
-  margin-right: 16px;
-  border-radius: 0.5rem;
-  background-color: #374151;
-  color: white;
-  outline: none;
   border: none;
-
-  &:focus {
-    box-shadow: 0 0 0 2px #9333ea;
-  }
+  border-radius: 4px;
+  margin-right: 10px;
+  flex-grow: 1;
 `;
 
 const SongList = ({ songs }) => {
@@ -41,18 +37,19 @@ const SongList = ({ songs }) => {
   const [newTitle, setNewTitle] = useState('');
   const [showAll, setShowAll] = useState(false);
 
-  const handleDelete = (id) => {
-    dispatch(deleteSong(id));
+  const handleEditClick = (id, title) => {
+    setEditingId(id);
+    setNewTitle(title);
   };
 
   const handleUpdate = (id) => {
     dispatch(updateSong({ id, title: newTitle }));
     setEditingId(null);
+    setNewTitle('');
   };
 
-  const handleEditClick = (id, title) => {
-    setEditingId(id);
-    setNewTitle(title);
+  const handleDelete = (id) => {
+    dispatch(deleteSong(id));
   };
 
   const handleShowAll = () => {
