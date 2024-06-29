@@ -1,18 +1,24 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import songsReducer from './songsSlice';
-import rootSaga from './sagas';
+// songsSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
-const sagaMiddleware = createSagaMiddleware();
-
-const store = configureStore({
-  reducer: {
-    songs: songsReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+const songsSlice = createSlice({
+  name: 'songs',
+  initialState: [], // Ensure this is an array
+  reducers: {
+    addSong: (state, action) => {
+      state.push(action.payload);
+    },
+    deleteSong: (state, action) => {
+      return state.filter(song => song.id !== action.payload);
+    },
+    updateSong: (state, action) => {
+      const songIndex = state.findIndex(song => song.id === action.payload.id);
+      if (songIndex !== -1) {
+        state[songIndex].title = action.payload.title;
+      }
+    }
+  }
 });
 
-sagaMiddleware.run(rootSaga);
-
-export default store;
+export const { addSong, deleteSong, updateSong } = songsSlice.actions;
+export default songsSlice.reducer;

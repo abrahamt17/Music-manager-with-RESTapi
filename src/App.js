@@ -17,6 +17,8 @@ const AppContainer = styled.div`
 
 function App() {
   const songs = useSelector((state) => state.songs);
+  console.log(songs); // Add this line to check the state
+
   return (
     <AppContainer>
       <h1>Song Manager</h1>

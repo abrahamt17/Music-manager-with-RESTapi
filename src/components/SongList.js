@@ -55,6 +55,10 @@ const SongList = ({ songs }) => {
     setNewTitle(currentTitle);
   };
 
+  if (!Array.isArray(songs)) {
+    return <div>Error: Songs data is not an array.</div>;
+  }
+
   const displayedSongs = showAll ? songs : songs.slice(0, 15);
 
   return (
