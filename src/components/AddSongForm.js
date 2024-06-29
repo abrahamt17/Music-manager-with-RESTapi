@@ -1,7 +1,48 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addSong } from '../songsSlice';
-import './style.css';
+
+const FormContainer = styled.form`
+  margin-bottom: 24px;
+  padding: 24px;
+  background: linear-gradient(to bottom right, #6b21a8, #1f1b24);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 0.5rem;
+  background-color: #1f1b24;
+  color: white;
+  outline: none;
+  border: none;
+
+  &:focus {
+    box-shadow: 0 0 0 2px #9333ea;
+  }
+`;
+
+const Button = styled.button`
+  background: linear-gradient(to right, #3b82f6, #ef4444);
+  color: white;
+  padding: 12px 16px;
+  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: background 0.2s;
+
+  &:focus {
+    box-shadow: 0 0 0 2px #111827;
+  }
+`;
 
 const AddSongForm = () => {
   const [title, setTitle] = useState('');
@@ -14,21 +55,15 @@ const AddSongForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 p-6 bg-gradient-to-br from-purple-700 to-purple-900 rounded-xl shadow-lg">
-      <input
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Song title"
-        className="w-full p-3 mb-4 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
-      <button
-        type="submit"
-        className="bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-2 text-xl rounded font-medium focus:ring ring-black ring-opacity-10"
-      >
-        Add Song
-      </button>
-    </form>
+      <Button type="submit">Add Song</Button>
+    </FormContainer>
   );
 };
 
