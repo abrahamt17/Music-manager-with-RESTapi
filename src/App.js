@@ -17,6 +17,12 @@ const AppContainer = styled.div`
 `;
 
 
+const Title = styled.h1`
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+`;
+
 const App = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs.songs);
