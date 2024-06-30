@@ -1,6 +1,6 @@
 # Song Manager
 
-A simple React and Redux application to manage a list of songs. This application allows you to add, edit, delete, and view a list of songs fetched from an external API.
+A simple React and Redux application to manage a list of songs. This application allows you to add, edit, delete, and view a list of songs fetched from RESTapi.
 
 ## Features
 
